@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/timestamp", function (req, res) {
+app.get("/api/", function (req, res) {
   const now = new Date();
   res.json({
     "unix": now.getTime(),
@@ -29,9 +29,18 @@ app.get("/api/timestamp", function (req, res) {
   });
 });
 
-app.get("/api/timestamp/:date_string", function (req, res) {
+app.get("/api/:date_string", function (req, res) {
   let date_string = req.params.date_string;
+
+  if(parseInt(date_string) > 10000){
+    let unixTime = new Date(parseInt(date_string));
+    res.json({
+      "unix": userInput.getTime(),
+      "utc":userInput.toUTCString()    })
+  }
+
   let userInput = new Date(date_string);
+
 
   if(userInput == "Invalid Date") {
     res.json({"error": "Invalid Date"})
